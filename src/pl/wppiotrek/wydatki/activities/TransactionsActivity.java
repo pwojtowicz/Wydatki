@@ -39,7 +39,8 @@ public class TransactionsActivity extends ProgressActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_transactions);
-		super.setProgressDialogCancelable(true);
+		super.setProgressDialogCancelable(false);
+		super.setShowProgressBar(true);
 
 		adapter = new TransactionsAdapter(this);
 		manager = new TransactionManager(this);

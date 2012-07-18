@@ -112,8 +112,9 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 	@Override
 	public void leaveActivity(int requestCode) {
+		Intent intent = this.getIntent();
+		this.setResult(requestCode, intent);
 		finish();
-
 	}
 
 	@Override
@@ -486,6 +487,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 	private void sendToWS(Transaction transaction) {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		TransactionManager manager = new TransactionManager(this);
 		manager.createNewTransaction(transaction);
 	}

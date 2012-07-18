@@ -10,4 +10,5 @@ public class ResultCodes {
 	public static final int START_ACTIVITY_EDIT_CATEGORY = 401;
 	public static final int START_ACTIVITY_EDIT_PARAMETER = 402;
 	public static final int START_ACTIVITY_EDIT_ACOOUNT = 403;
+	public static final int START_ACTIVITY_INVOKE_TRANSACTION = 404;
 }

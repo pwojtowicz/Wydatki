@@ -104,7 +104,8 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 		}
 
 		if (intent != null)
-			startActivity(intent);
+			startActivityForResult(intent,
+					ResultCodes.START_ACTIVITY_INVOKE_TRANSACTION);
 	}
 
 	public void configureViews() {
@@ -281,7 +282,8 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == ResultCodes.START_ACTIVITY_EDIT_ACOOUNT) {
+		if (requestCode == ResultCodes.START_ACTIVITY_EDIT_ACOOUNT
+				|| requestCode == ResultCodes.START_ACTIVITY_INVOKE_TRANSACTION) {
 			if (resultCode == ResultCodes.RESULT_NEED_REFRESH) {
 				refreshActivity(true);
 			}
