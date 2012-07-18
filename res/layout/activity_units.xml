@@ -1,0 +1,109 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linea"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    
+
+    <RelativeLayout
+        android:id="@+id/test"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/app_background_dark"
+            android:gravity="clip_horizontal"
+            android:orientation="vertical"
+            android:weightSum="1" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginBottom="1dp"
+                android:layout_weight="0.5"
+                android:weightSum="1" >
+
+                <Button
+                    android:id="@+id/unit_btn_categories"
+                    style="@style/Style_TextWithShadow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/transparent_button"
+                    android:text="@string/categories"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#FFF" />
+
+                <Button
+                    android:id="@+id/unit_btn_settings"
+                    style="@style/Style_TextWithShadow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/transparent_button"
+                    android:text="@string/settings"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#FFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="1dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal"
+                android:weightSum="1" >
+
+                <Button
+                    android:id="@+id/unit_btn_projects"
+                    style="@style/Style_TextWithShadow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/transparent_button"
+                    android:text="@string/projects"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#FFF" />
+
+                <Button
+                    android:id="@+id/unit_btn_parameters"
+                    style="@style/Style_TextWithShadow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="0.5"
+                    android:background="@color/transparent_button"
+                    android:text="@string/parameters"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#FFF" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/View01"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_centerVertical="true"
+            android:background="@color/separator_horizontal" />
+
+        <View
+            android:id="@+id/View02"
+            android:layout_width="2dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/separator_vertical" />
+    </RelativeLayout>
+
+</LinearLayout>

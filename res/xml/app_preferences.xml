@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+        xmlns:android="http://schemas.android.com/apk/res/android">
+      <PreferenceCategory
+            android:title="@string/preferences_login_pref">
+    	<EditTextPreference
+            android:key="prop_user_login"
+            android:title="@string/preferences_login"
+            android:dialogTitle="@string/preferences_login"
+            android:defaultValue="wppiotrek85" />
+    	<CheckBoxPreference
+            android:key="prop_remember_password"
+            android:defaultValue="true"
+            android:title="@string/preferences_remember_password" />
+     
+    	<EditTextPreference
+        	android:dependency="prop_remember_password"
+        	android:password="true"
+            android:key="prop_user_password"
+            android:title="@string/preferences_password"
+            android:dialogTitle="@string/preferences_password"
+            android:defaultValue="123qwe" />
+    </PreferenceCategory>
+    <PreferenceCategory
+            android:title="@string/preferences_server_pref">
+    	<EditTextPreference       	
+            android:key="prop_server_address"
+            android:title="@string/preferences_server_address"
+            android:dialogTitle="@string/preferences_server_address"
+            android:defaultValue="http://imdemo.billennium.pl:121/pwojtowiczWS/" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

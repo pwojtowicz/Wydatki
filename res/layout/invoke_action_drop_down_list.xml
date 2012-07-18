@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="4dp"
+    android:minHeight="48dp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/invoke_action_label"
+        style="@style/Style_TextWithShadow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/invoke_action_dropdown_spiner"
+        style="@style/Style_TextWithShadow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/btn_blue" />
+
+</LinearLayout>

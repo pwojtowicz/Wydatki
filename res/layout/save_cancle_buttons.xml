@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+	<Button
+	    android:id="@+id/bSave"
+	    style="@style/Style_TextWithShadow"
+	    android:layout_width="0dp"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1"
+	    android:background="@color/btn_blue"
+	    android:drawableLeft="@android:drawable/ic_menu_save"
+	    android:text="@string/save" />
+
+	<Button
+	    android:id="@+id/bCancel"
+	    style="@style/Style_TextWithShadow"
+	    android:layout_width="0dp"
+	    android:layout_height="fill_parent"
+	    android:layout_weight="1"
+	    android:background="@color/btn_blue"
+	    android:text="@string/cancel" />
+
+</LinearLayout>
