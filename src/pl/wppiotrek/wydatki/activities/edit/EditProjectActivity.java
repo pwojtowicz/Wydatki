@@ -54,6 +54,7 @@ public class EditProjectActivity extends EditAbstractActivity<Project> {
 	public void saveObject() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		ProjectManager manager = new ProjectManager(this);
 		if (isUpdate)
 			manager.editProject(currentObject);

@@ -177,6 +177,7 @@ public class AttributesActivity extends ProgressActivity implements
 	private void changeLock() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		ParameterManager manager = new ParameterManager(this);
 		Parameter parameter = AndroidGlobals.getInstance()
 				.getCurrentSelectedParameter();

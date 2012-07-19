@@ -203,6 +203,7 @@ public class CategoriesActivity extends ProgressActivity implements
 	private void changeLock() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		CategoriesManager manager = new CategoriesManager(this);
 		Category category = AndroidGlobals.getInstance()
 				.getCurrentSelectedCategory();

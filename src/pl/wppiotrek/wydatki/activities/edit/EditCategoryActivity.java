@@ -253,6 +253,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 	protected void saveObject() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		CategoriesManager manager = new CategoriesManager(this);
 		if (isUpdate)
 			manager.editCategory(currentObject);

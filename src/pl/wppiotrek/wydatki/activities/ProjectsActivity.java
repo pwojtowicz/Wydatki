@@ -190,6 +190,7 @@ public class ProjectsActivity extends ProgressActivity implements
 	private void changeLock() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		ProjectManager manager = new ProjectManager(this);
 		Project project = AndroidGlobals.getInstance()
 				.getCurrentSelectedProject();
@@ -198,6 +199,9 @@ public class ProjectsActivity extends ProgressActivity implements
 	}
 
 	private void removeObject() {
+		super.setProgressDialogCancelable(false);
+		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		ProjectManager manager = new ProjectManager(this);
 		manager.deleteProject(AndroidGlobals.getInstance()
 				.getCurrentSelectedProject());
@@ -206,10 +210,13 @@ public class ProjectsActivity extends ProgressActivity implements
 
 	@Override
 	public void onObjectsReceived(Object object, Object object2) {
+		AndroidGlobals globals = AndroidGlobals.getInstance();
 		if (object instanceof String && ((String) object).equals("OK")) {
-
+			globals.getProjectsDictionary().remove(
+					globals.getCurrentSelectedProject().getId());
+			refreshList();
 		} else if (object instanceof Project) {
-			AndroidGlobals.getInstance().updateProjectsList((Project) object);
+			globals.updateProjectsList((Project) object);
 			refreshList();
 		} else if (object instanceof Project[]) {
 			refreshList();

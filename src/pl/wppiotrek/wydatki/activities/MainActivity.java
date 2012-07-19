@@ -260,6 +260,7 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 	private void changeLock() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		AccountManager manager = new AccountManager(this);
 		Account account = AndroidGlobals.getInstance()
 				.getCurrentSelectedAccount();

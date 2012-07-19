@@ -236,6 +236,7 @@ public class EditParameterActivity extends EditAbstractActivity<Parameter> {
 	protected void saveObject() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		manager = new ParameterManager(this);
 		manager.createNewParameter(currentObject);
 

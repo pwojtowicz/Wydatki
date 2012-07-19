@@ -124,6 +124,7 @@ public class EditAccountActivity extends EditAbstractActivity<Account> {
 	protected void saveObject() {
 		super.setProgressDialogCancelable(false);
 		super.setIsSendProgressBar(true);
+		super.setShowProgressBar(true);
 		AccountManager manager = new AccountManager(this);
 		if (isUpdate)
 			manager.editAccount(currentObject);
