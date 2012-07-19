@@ -99,8 +99,8 @@ public class TransactionDetailsInput extends Activity implements
 			}
 
 			if (transaction.getProjectId() > 0) {
-				items.add(new DoubleStringObject("Projekt", String
-						.valueOf(transaction.getProjectId()),
+				items.add(new DoubleStringObject("Projekt", globals
+						.getProjectById(transaction.getProjectId()).getName(),
 						ParameterTypes.ParameterText));
 			}
 
