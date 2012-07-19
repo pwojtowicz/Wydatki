@@ -1,7 +1,8 @@
 package pl.wppiotrek.wydatki.support;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.Collection;
+import java.util.LinkedHashMap;
 
 import pl.wppiotrek.wydatki.entities.Account;
 import pl.wppiotrek.wydatki.entities.Category;
@@ -20,9 +21,9 @@ public class AndroidGlobals {
 
 	private ArrayList<Transaction> transactionList;
 
-	private Hashtable<Integer, Account> accountsDictionary;
-	private Hashtable<Integer, Parameter> parametersDictionary;
-	private Hashtable<Integer, Project> projectsDictionary;
+	private LinkedHashMap<Integer, Account> accountsDictionary;
+	private LinkedHashMap<Integer, Parameter> parametersDictionary;
+	private LinkedHashMap<Integer, Project> projectsDictionary;
 
 	private Account currentSelectedAccount;
 	private Parameter currentSelectedParameter;
@@ -161,7 +162,7 @@ public class AndroidGlobals {
 	}
 
 	public void updateParametersList(Parameter parameter) {
-		if (parametersDictionary.containsKey(parameter.getId()))
+		if (parametersDictionary.get(parameter.getId()) != null)
 			parametersDictionary.remove(parameter.getId());
 		parametersDictionary.put(parameter.getId(), parameter);
 	}
@@ -179,7 +180,7 @@ public class AndroidGlobals {
 	}
 
 	public void updateProjectsList(Project project) {
-		if (projectsDictionary.containsKey(project.getId()))
+		if (projectsDictionary.get(project.getId()) != null)
 			projectsDictionary.remove(project.getId());
 		projectsDictionary.put(project.getId(), project);
 
@@ -191,7 +192,7 @@ public class AndroidGlobals {
 	}
 
 	public void updateAccountsList(Account account) {
-		if (accountsDictionary.containsKey(account.getId()))
+		if (accountsDictionary.get(account.getId()) != null)
 			accountsDictionary.remove(account.getId());
 		accountsDictionary.put(account.getId(), account);
 
@@ -245,49 +246,89 @@ public class AndroidGlobals {
 	/**
 	 * @return the parametersDictionary
 	 */
-	public Hashtable<Integer, Parameter> getParametersDictionary() {
-		return parametersDictionary;
-	}
 
 	/**
 	 * @param parametersDictionary
 	 *            the parametersDictionary to set
 	 */
 	public void setParametersDictionary(
-			Hashtable<Integer, Parameter> parametersDictionary) {
+			LinkedHashMap<Integer, Parameter> parametersDictionary) {
 		this.parametersDictionary = parametersDictionary;
 	}
 
 	/**
 	 * @return the projectsDictionary
 	 */
-	public Hashtable<Integer, Project> getProjectsDictionary() {
-		return projectsDictionary;
-	}
 
 	/**
 	 * @param projectsDictionary
 	 *            the projectsDictionary to set
 	 */
 	public void setProjectsDictionary(
-			Hashtable<Integer, Project> projectsDictionary) {
+			LinkedHashMap<Integer, Project> projectsDictionary) {
 		this.projectsDictionary = projectsDictionary;
 	}
 
 	/**
 	 * @return the accountsDictionary
 	 */
-	public Hashtable<Integer, Account> getAccountsDictionary() {
-		return accountsDictionary;
-	}
 
 	/**
 	 * @param accountsDictionary
 	 *            the accountsDictionary to set
 	 */
 	public void setAccountsDictionary(
-			Hashtable<Integer, Account> accountsDictionary) {
+			LinkedHashMap<Integer, Account> accountsDictionary) {
 		this.accountsDictionary = accountsDictionary;
+	}
+
+	public ArrayList<Account> getAccountsList() {
+		if (accountsDictionary == null)
+			return null;
+		ArrayList<Account> accounts = new ArrayList<Account>();
+		Collection<Account> items = accountsDictionary.values();
+		for (Account account : items) {
+			accounts.add(account);
+
+		}
+		return accounts;
+	}
+
+	public ArrayList<Parameter> getParametersList() {
+		if (parametersDictionary == null)
+			return null;
+		ArrayList<Parameter> parameters = new ArrayList<Parameter>();
+		Collection<Parameter> items = parametersDictionary.values();
+		for (Parameter parameter : items) {
+			parameters.add(parameter);
+
+		}
+		return parameters;
+	}
+
+	public ArrayList<Project> getProjectsList() {
+		if (projectsDictionary == null)
+			return null;
+
+		ArrayList<Project> projects = new ArrayList<Project>();
+		Collection<Project> items = projectsDictionary.values();
+		for (Project project : items) {
+			projects.add(project);
+
+		}
+		return projects;
+	}
+
+	public LinkedHashMap<Integer, Account> getAccountsDictionary() {
+		return accountsDictionary;
+	}
+
+	public LinkedHashMap<Integer, Parameter> getParametersDictionary() {
+		return parametersDictionary;
+	}
+
+	public LinkedHashMap<Integer, Project> getProjectsDictionary() {
+		return projectsDictionary;
 	}
 
 }

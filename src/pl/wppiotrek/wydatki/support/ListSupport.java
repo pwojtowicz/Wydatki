@@ -27,6 +27,7 @@ public class ListSupport {
 			if (account.getName().equals(name))
 				return true;
 		}
+
 		return false;
 
 	}

@@ -77,7 +77,8 @@ public class EditAccountActivity extends EditAbstractActivity<Account> {
 		} else {
 			AndroidGlobals globals = AndroidGlobals.getInstance();
 			Account a = (Account) object;
-			globals.getAccountsDictionary().put(a.getId(), a);
+			globals.updateAccountsList(a);
+			// globals.getAccountsDictionary().put(a.getId(), a);
 		}
 		leaveActivity(ResultCodes.RESULT_NEED_REFRESH);
 	}

@@ -99,7 +99,7 @@ public class EditProjectActivity extends EditAbstractActivity<Project> {
 				globals.updateProjectsList((Project) object);
 			} else {
 				Project p = (Project) object;
-				globals.getProjectsDictionary().put(p.getId(), p);
+				globals.updateProjectsList(p);
 			}
 			leaveActivity(ResultCodes.RESULT_NEED_UPDATE);
 		}

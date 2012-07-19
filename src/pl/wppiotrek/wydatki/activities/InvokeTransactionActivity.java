@@ -2,7 +2,6 @@ package pl.wppiotrek.wydatki.activities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 
 import pl.wppiotrek.wydatki.R;
@@ -219,7 +218,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 	private void getAccounts(Spinner spinner) {
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		Collection<Account> accounts = globals.getAccountsDictionary().values();
+		ArrayList<Account> accounts = globals.getAccountsList();
 
 		if (accounts != null) {
 			ArrayList<SpinnerObject> items = new ArrayList<SpinnerObject>();
@@ -242,8 +241,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 	private void getProjects() {
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		Collection<Project> projects = globals.getProjectsDictionary().values();
-
+		ArrayList<Project> projects = globals.getProjectsList();
 		if (projects != null) {
 
 			ArrayList<SpinnerObject> items = new ArrayList<SpinnerObject>();
@@ -263,7 +261,6 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 			spn_project.setAdapter(adapter);
 		}
-
 	}
 
 	private void getCategories() {

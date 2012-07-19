@@ -176,7 +176,7 @@ public class EditParameterActivity extends EditAbstractActivity<Parameter> {
 				globals.updateParametersList((Parameter) object);
 			} else {
 				Parameter p = (Parameter) object;
-				globals.getParametersDictionary().put(p.getId(), p);
+				globals.updateParametersList(p);
 			}
 			leaveActivity(ResultCodes.RESULT_NEED_UPDATE);
 

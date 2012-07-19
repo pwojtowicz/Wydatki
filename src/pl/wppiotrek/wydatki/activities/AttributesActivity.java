@@ -1,7 +1,6 @@
 package pl.wppiotrek.wydatki.activities;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.activities.edit.EditParameterActivity;
@@ -66,13 +65,7 @@ public class AttributesActivity extends ProgressActivity implements
 
 	private void refreshList() {
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		Hashtable<Integer, Parameter> parametersTable = globals
-				.getParametersDictionary();
-
-		ArrayList<Parameter> parameters = new ArrayList<Parameter>();
-		for (Parameter parameter : parametersTable.values()) {
-			parameters.add(parameter);
-		}
+		ArrayList<Parameter> parameters = globals.getParametersList();
 
 		if (parameters != null) {
 			adapter = new ParametersAdapter(this, parameters);

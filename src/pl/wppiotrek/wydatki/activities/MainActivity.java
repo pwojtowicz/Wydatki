@@ -1,7 +1,6 @@
 package pl.wppiotrek.wydatki.activities;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.activities.edit.EditAccountActivity;
@@ -139,9 +138,9 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 	private void refreshList() {
 		Double value = 0.0;
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		Collection<Account> accountsDictionary = null;
+		ArrayList<Account> accountsDictionary = null;
 		if (globals.getAccountsDictionary() != null) {
-			accountsDictionary = globals.getAccountsDictionary().values();
+			accountsDictionary = globals.getAccountsList();
 			ArrayList<Account> accounts = new ArrayList<Account>();
 
 			for (Account account : accountsDictionary) {

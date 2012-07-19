@@ -1,7 +1,7 @@
 package pl.wppiotrek.wydatki.managers;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.LinkedHashMap;
 
 import pl.wppiotrek.wydatki.entities.Account;
 import pl.wppiotrek.wydatki.entities.Category;
@@ -159,7 +159,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 		if (object instanceof Account[]) {
 			System.out.println("DownloadDataManager:onObjectsReceived Account");
 			accountsIsDownloaded = true;
-			Hashtable<Integer, Account> elements = new Hashtable<Integer, Account>();
+			LinkedHashMap<Integer, Account> elements = new LinkedHashMap<Integer, Account>();
 			Account[] items = (Account[]) object;
 			for (Account item : items) {
 				elements.put(item.getId(), item);
@@ -183,7 +183,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 			System.out
 					.println("DownloadDataManager:onObjectsReceived Parameter");
 			parametersIsDownloaded = true;
-			Hashtable<Integer, Parameter> elements = new Hashtable<Integer, Parameter>();
+			LinkedHashMap<Integer, Parameter> elements = new LinkedHashMap<Integer, Parameter>();
 			Parameter[] items = (Parameter[]) object;
 			for (Parameter item : items) {
 				elements.put(item.getId(), item);
@@ -194,7 +194,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 		if (object instanceof Project[]) {
 			System.out.println("DownloadDataManager:onObjectsReceived Project");
 			projectsIsDownloaded = true;
-			Hashtable<Integer, Project> elements = new Hashtable<Integer, Project>();
+			LinkedHashMap<Integer, Project> elements = new LinkedHashMap<Integer, Project>();
 			Project[] items = (Project[]) object;
 			for (Project item : items) {
 				elements.put(item.getId(), item);

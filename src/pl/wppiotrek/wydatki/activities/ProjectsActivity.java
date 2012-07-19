@@ -1,7 +1,6 @@
 package pl.wppiotrek.wydatki.activities;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.activities.edit.EditProjectActivity;
@@ -66,13 +65,7 @@ public class ProjectsActivity extends ProgressActivity implements
 
 	private void refreshList() {
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		Collection<Project> projectsDictionary = globals
-				.getProjectsDictionary().values();
-
-		ArrayList<Project> projects = new ArrayList<Project>();
-		for (Project project : projectsDictionary) {
-			projects.add(project);
-		}
+		ArrayList<Project> projects = globals.getProjectsList();
 
 		if (projects != null) {
 			adapter = new ProjectsAdapter(this, projects);
