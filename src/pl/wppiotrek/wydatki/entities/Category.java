@@ -5,6 +5,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import pl.wppiotrek.wydatki.support.AndroidGlobals;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class Category extends ModelBase {
@@ -104,24 +106,32 @@ public class Category extends ModelBase {
 		this.rn = rn;
 	}
 
+	private boolean checkDescription = false;
+
 	public void setDescription() {
-		if (attributes != null && attributes.length > 0) {
-			StringBuilder sb = new StringBuilder();
-			sb.append("[");
-			boolean isFirst = true;
-			for (Parameter item : attributes) {
-				if (!isFirst)
-					sb.append(", ");
+		if (!checkDescription) {
+			checkDescription = true;
+			AndroidGlobals globals = AndroidGlobals.getInstance();
 
-				sb.append(item.getName());
+			if (attributes != null && attributes.length > 0) {
+				StringBuilder sb = new StringBuilder();
+				sb.append("[");
+				boolean isFirst = true;
+				for (Parameter item : attributes) {
+					Parameter p = globals.getParameterById(item.getId());
+					if (!isFirst)
+						sb.append(", ");
 
-				if (isFirst)
-					isFirst = false;
-			}
-			sb.append("]");
-			this.description = sb.toString();
-		} else
-			this.description = "";
+					sb.append(p.getName());
+
+					if (isFirst)
+						isFirst = false;
+				}
+				sb.append("]");
+				this.description = sb.toString();
+			} else
+				this.description = "";
+		}
 	}
 
 	public String getParameters() {
