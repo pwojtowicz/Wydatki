@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -56,6 +57,9 @@ public class ParametersAdapter extends BaseAdapter {
 
 			oh.lock = (ImageView) convertView
 					.findViewById(R.id.row_parameter_lock);
+
+			oh.cbx_selected = (CheckBox) convertView
+					.findViewById(R.id.row_cbx_selected);
 			convertView.setTag(oh);
 		}
 
@@ -90,6 +94,7 @@ public class ParametersAdapter extends BaseAdapter {
 		public ImageView lock;
 		public TextView type;
 		public TextView value;
+		public CheckBox cbx_selected;
 
 	}
 

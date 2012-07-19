@@ -34,9 +34,10 @@ public class Category extends ModelBase {
 	private Parameter[] attributes;
 
 	@JsonProperty("RN")
-	private Double rn;
+	private String rn;
 
-	private String description;
+	private String description = "";
+	private String lvl = "";
 
 	public int getParentId() {
 		return parentId;
@@ -94,7 +95,7 @@ public class Category extends ModelBase {
 	/**
 	 * @return the rn
 	 */
-	public Double getRn() {
+	public String getRn() {
 		return rn;
 	}
 
@@ -102,8 +103,16 @@ public class Category extends ModelBase {
 	 * @param rn
 	 *            the rn to set
 	 */
-	public void setRn(Double rn) {
+	public void setRn(String rn) {
 		this.rn = rn;
+		if (rn != null) {
+			String[] items = rn.split("\\.");
+			if (items.length > 1) {
+				for (int i = 0; i < items.length - 1; i++) {
+					lvl += "--";
+				}
+			}
+		}
 	}
 
 	private boolean checkDescription = false;
@@ -136,6 +145,14 @@ public class Category extends ModelBase {
 
 	public String getParameters() {
 		return this.description;
+	}
+
+	public String getLvl() {
+		return lvl;
+	}
+
+	public void setLvl(String lvl) {
+		this.lvl = lvl;
 	}
 
 }

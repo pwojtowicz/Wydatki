@@ -273,7 +273,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 			for (Category item : categories) {
 				if (item.isActive() && item.getParentId() > 0)
-					items.add(new SpinnerObject(item.getId(), "- "
+					items.add(new SpinnerObject(item.getId(), item.getLvl()
 							+ item.getName()));
 				else if (item.isActive())
 					items.add(new SpinnerObject(item.getId(), item.getName()));

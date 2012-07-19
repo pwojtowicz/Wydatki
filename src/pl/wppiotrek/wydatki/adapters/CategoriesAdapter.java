@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -57,6 +58,8 @@ public class CategoriesAdapter extends BaseAdapter {
 
 			oh.subitem = (ImageView) convertView
 					.findViewById(R.id.row_category_subitem);
+			oh.cbx_selected = (CheckBox) convertView
+					.findViewById(R.id.row_cbx_selected);
 			convertView.setTag(oh);
 		}
 
@@ -79,7 +82,7 @@ public class CategoriesAdapter extends BaseAdapter {
 			else
 				oh.subitem.setVisibility(ImageView.VISIBLE);
 
-			oh.name.setText(c.getName());
+			oh.name.setText(c.getLvl() + c.getName());
 
 			oh.details.setText(c.getParameters());
 
@@ -89,6 +92,7 @@ public class CategoriesAdapter extends BaseAdapter {
 	}
 
 	public class CategoryAdapterObjectHandler {
+		public CheckBox cbx_selected;
 		public Category category;
 		public TextView name;
 		public TextView details;
