@@ -24,13 +24,6 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/row_category_subitem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@android:drawable/ic_media_play" />
-
-    <ImageView
         android:id="@+id/row_category_lock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -56,8 +56,6 @@ public class CategoriesAdapter extends BaseAdapter {
 			oh.lock = (ImageView) convertView
 					.findViewById(R.id.row_category_lock);
 
-			oh.subitem = (ImageView) convertView
-					.findViewById(R.id.row_category_subitem);
 			oh.cbx_selected = (CheckBox) convertView
 					.findViewById(R.id.row_cbx_selected);
 			convertView.setTag(oh);
@@ -77,11 +75,6 @@ public class CategoriesAdapter extends BaseAdapter {
 			else
 				oh.lock.setVisibility(ImageView.VISIBLE);
 
-			if (c.getParentId() == 0)
-				oh.subitem.setVisibility(ImageView.GONE);
-			else
-				oh.subitem.setVisibility(ImageView.VISIBLE);
-
 			oh.name.setText(c.getLvl() + c.getName());
 
 			oh.details.setText(c.getParameters());
@@ -97,7 +90,6 @@ public class CategoriesAdapter extends BaseAdapter {
 		public TextView name;
 		public TextView details;
 		public ImageView lock;
-		public ImageView subitem;
 
 	}
 
