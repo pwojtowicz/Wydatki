@@ -39,6 +39,9 @@ public class Account extends ModelBase {
 	@JsonProperty("IsSumInGlobalBalance")
 	private Boolean isSumInGlobalBalance;
 
+	@JsonProperty("ImageIndex")
+	private Byte imageIndex;
+
 	public String getName() {
 		return name;
 	}
@@ -91,6 +94,14 @@ public class Account extends ModelBase {
 	 */
 	public void setIsSumInGlobalBalance(Boolean isSumInGlobalBalance) {
 		this.isSumInGlobalBalance = isSumInGlobalBalance;
+	}
+
+	public Byte getImageIndex() {
+		return imageIndex;
+	}
+
+	public void setImageIndex(Byte imageIndex) {
+		this.imageIndex = imageIndex;
 	}
 
 	// /**

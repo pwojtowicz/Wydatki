@@ -25,6 +25,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.ToggleButton;
 
 public class EditCategoryActivity extends EditAbstractActivity<Category> {
 
@@ -32,6 +33,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 	private ParameterManager manager;
 	private ListView listView;
 	private CategoryParametersAdapter adapter;
+	private ToggleButton tbn_isPositive;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,8 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 
 		etbx_name = (EditText) header.findViewById(R.id.edit_etbx_name);
 		cbx_isActive = (CheckBox) header.findViewById(R.id.edit_cbx_isActive);
+		tbn_isPositive = (ToggleButton) header
+				.findViewById(R.id.edit_category_tbn_ispositive);
 		spn_parent = (Spinner) header
 				.findViewById(R.id.edit_category_spn_parent);
 
@@ -74,6 +78,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 		if (isUpdate) {
 			etbx_name.setText(currentObject.getName());
 			cbx_isActive.setChecked(currentObject.isActive());
+			tbn_isPositive.setChecked(currentObject.isPositive());
 
 		}
 	}
@@ -134,7 +139,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 		}
 
 		if (object.getId() > 0) {
-			adapter.addParameter("Parametry nadrz«dne");
+			adapter.addParameter("Parametry nadrzÂ«dne");
 			addParameterForCategoryId(object.getId(), AndroidGlobals
 					.getInstance().getCategoryList());
 		}
@@ -146,7 +151,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 			ArrayList<Category> cat) {
 		for (Category item : cat) {
 			if (item.getId() == categoryId) {
-				// Dodanie parametr—w kategorii nadrz«dnej jeæli istniejˆ
+				// Dodanie parametrâ€”w kategorii nadrzÂ«dnej jeÄ‡li istniejï¿½
 				if (item.getParentId() > 0)
 					addParameterForCategoryId(item.getParentId(), cat);
 				for (Parameter parameter : item.getAttributes()) {
@@ -240,6 +245,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 			category.setParentId(currentObject.getParentId());
 			category.setName(etbx_name.getText().toString());
 			category.setIsActive(cbx_isActive.isChecked());
+			category.setIsPositive(tbn_isPositive.isChecked());
 
 			category.setAttributes(currentObject.getAttributes());
 			this.currentObject = category;

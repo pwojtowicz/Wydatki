@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.entities.Account;
+import pl.wppiotrek.wydatki.units.AccountImages;
 import pl.wppiotrek.wydatki.units.UnitConverter;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -82,6 +83,9 @@ public class AccountsAdapter extends BaseAdapter {
 			else if (a.getBalance() > 0)
 				oh.balance.setTextColor(context.getResources().getColor(
 						R.color.darkGreen));
+			oh.image.setImageDrawable(AccountImages.getImageForImageIndex(
+					a.getImageIndex(), context));
+
 			oh.account = a;
 		}
 

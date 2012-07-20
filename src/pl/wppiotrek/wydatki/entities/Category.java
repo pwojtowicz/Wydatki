@@ -27,6 +27,9 @@ public class Category extends ModelBase {
 	@JsonProperty("IsActive")
 	private Boolean isActive;
 
+	@JsonProperty("IsPositive")
+	private Boolean isPositive;
+
 	@JsonProperty("ParentId")
 	private int parentId;
 
@@ -153,6 +156,14 @@ public class Category extends ModelBase {
 
 	public void setLvl(String lvl) {
 		this.lvl = lvl;
+	}
+
+	public Boolean isPositive() {
+		return isPositive;
+	}
+
+	public void setIsPositive(Boolean isPositive) {
+		this.isPositive = isPositive;
 	}
 
 }

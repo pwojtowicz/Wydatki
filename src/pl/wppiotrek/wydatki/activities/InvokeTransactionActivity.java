@@ -19,6 +19,7 @@ import pl.wppiotrek.wydatki.managers.DownloadDataManager;
 import pl.wppiotrek.wydatki.managers.TransactionManager;
 import pl.wppiotrek.wydatki.support.AndroidGlobals;
 import pl.wppiotrek.wydatki.support.DialogFactory;
+import pl.wppiotrek.wydatki.support.ListSupport;
 import pl.wppiotrek.wydatki.units.DialogType;
 import pl.wppiotrek.wydatki.units.RefreshOptions;
 import pl.wppiotrek.wydatki.units.ResultCodes;
@@ -379,6 +380,10 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 			} else {
 				additionParametersTextView.setVisibility(TextView.GONE);
 				hasAdditionalParameters = false;
+			}
+			Category c = ListSupport.getCategoryById(object.getId(), cat);
+			if (c != null) {
+				isPositive.setChecked(c.isPositive());
 			}
 
 			adapter.setParamaters(parameters);
