@@ -82,6 +82,8 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 	private Spinner spn_project;
 
+	private LinearLayout ll_project;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -141,6 +143,9 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 		ll_category = (LinearLayout) header
 				.findViewById(R.id.invoke_transaction_header_ll_category);
+
+		ll_project = (LinearLayout) footer
+				.findViewById(R.id.invoke_transaction_footer_ll_project);
 
 		isPositive = (ToggleButton) header
 				.findViewById(R.id.invoke_transaction_header_tbn_ispositive);
@@ -271,12 +276,29 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 			ArrayList<SpinnerObject> items = new ArrayList<SpinnerObject>();
 
+			int blockCategoryId = -1;
 			for (Category item : categories) {
-				if (item.isActive() && item.getParentId() > 0)
-					items.add(new SpinnerObject(item.getId(), item.getLvl()
-							+ item.getName()));
-				else if (item.isActive())
-					items.add(new SpinnerObject(item.getId(), item.getName()));
+				if (!item.isActive()) {
+					blockCategoryId = item.getId();
+					continue;
+				}
+				if (item.isActive() && item.getParentId() != blockCategoryId) {
+					if (item.getParentId() > 0) {
+						items.add(new SpinnerObject(item.getId(), item.getLvl()
+								+ item.getName()));
+					} else {
+						items.add(new SpinnerObject(item.getId(), item
+								.getName()));
+					}
+				}
+				if (item.getParentId() == blockCategoryId)
+					blockCategoryId = item.getId();
+
+				// if (item.isActive() && item.getParentId() > 0
+				// && item.getParentId() != blockCategoryId)
+				//
+				// else if (item.isActive())
+
 			}
 
 			SpinnerObject[] strArray = new SpinnerObject[items.size()];
@@ -287,11 +309,6 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 
 			category.setAdapter(adapter);
 		}
-		// } else if (categoriesIsDownloading == false) {
-		// categoriesIsDownloading = true;
-		// CategoriesManager manager = new CategoriesManager(this);
-		// manager.getAllCategories();
-		// }
 	}
 
 	@Override
@@ -301,11 +318,13 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 		if (isTransfer) {
 			ll_accountTo.setVisibility(LinearLayout.VISIBLE);
 			ll_category.setVisibility(LinearLayout.GONE);
+			ll_project.setVisibility(LinearLayout.GONE);
 			isPositive.setVisibility(ToggleButton.GONE);
 			additionParametersTextView.setVisibility(TextView.GONE);
 		} else {
 			ll_accountTo.setVisibility(LinearLayout.GONE);
 			ll_category.setVisibility(LinearLayout.VISIBLE);
+			ll_project.setVisibility(LinearLayout.VISIBLE);
 			isPositive.setVisibility(ToggleButton.VISIBLE);
 		}
 		refreshActivity();
