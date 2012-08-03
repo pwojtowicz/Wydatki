@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.entities.Parameter;
+import pl.wppiotrek.wydatki.support.AndroidGlobals;
 import pl.wppiotrek.wydatki.units.ParameterTypes;
 import pl.wppiotrek.wydatki.units.ViewState;
 import pl.wppiotrek.wydatki.views.ViewType;
@@ -121,6 +122,8 @@ public class CategoryParametersAdapter extends BaseAdapter {
 			Object o, int index) {
 		Parameter p = (Parameter) o;
 		if (p != null) {
+			p = AndroidGlobals.getInstance().getParameterById(p.getId());
+
 			if (p.isActive())
 				oh.lock.setVisibility(ImageView.GONE);
 			else

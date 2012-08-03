@@ -65,7 +65,7 @@ public class CategoriesActivity extends ProgressActivity implements
 
 	private void refreshList() {
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		ArrayList<Category> categories = globals.getCategoryList();
+		ArrayList<Category> categories = globals.getCategoriesList();
 		if (categories != null) {
 			adapter = new CategoriesAdapter(this, categories);
 			list.setAdapter(adapter);

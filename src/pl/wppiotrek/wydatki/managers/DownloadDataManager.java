@@ -1,6 +1,5 @@
 package pl.wppiotrek.wydatki.managers;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 import pl.wppiotrek.wydatki.entities.Account;
@@ -71,7 +70,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 
 		if (isForceRefresh) {
 			globals.setAccountsDictionary(null);
-			globals.setCategoryList(null);
+			globals.setCategoriesDictionary(null);
 			globals.setParametersDictionary(null);
 			globals.setProjectsDictionary(null);
 		}
@@ -127,7 +126,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 	}
 
 	public void getCategories(AndroidGlobals globals) {
-		if (globals.getCategoryList() == null) {
+		if (globals.getCategoriesDictionary() == null) {
 			categoryManager = new CategoriesManager(this);
 			categoryManager.setOnObjectsReceivedListener(listener);
 			categoryManager.getAllCategories();
@@ -170,14 +169,23 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 			System.out
 					.println("DownloadDataManager:onObjectsReceived Category");
 			categoriesIsDownloaded = true;
-			ArrayList<Category> elements = new ArrayList<Category>();
-			Category[] items = (Category[]) object;
 
+			LinkedHashMap<Integer, Category> elements = new LinkedHashMap<Integer, Category>();
+			Category[] items = (Category[]) object;
 			for (Category item : items) {
-				item.setDescription();
-				elements.add(item);
+				elements.put(item.getId(), item);
 			}
-			globals.setCategoryList(elements);
+
+			globals.setCategoriesDictionary(elements);
+
+			// ArrayList<Category> elements = new ArrayList<Category>();
+			// Category[] items = (Category[]) object;
+			//
+			// for (Category item : items) {
+			// item.setDescription();
+			// elements.add(item);
+			// }
+			// globals.setCategoryList(elements);
 		}
 		if (object instanceof Parameter[]) {
 			System.out
@@ -240,7 +248,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 			break;
 		case RefreshOptions.refreshCategories:
 			if (isForceRefresh)
-				globals.setCategoryList(null);
+				globals.setCategoriesDictionary(null);
 			categoriesIsDownloaded = false;
 			break;
 		case RefreshOptions.refreshParameters:

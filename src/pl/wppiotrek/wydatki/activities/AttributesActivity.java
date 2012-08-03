@@ -3,6 +3,7 @@ package pl.wppiotrek.wydatki.activities;
 import java.util.ArrayList;
 
 import pl.wppiotrek.wydatki.R;
+import pl.wppiotrek.wydatki.activities.edit.EditCategoryActivity;
 import pl.wppiotrek.wydatki.activities.edit.EditParameterActivity;
 import pl.wppiotrek.wydatki.adapters.ParametersAdapter;
 import pl.wppiotrek.wydatki.adapters.ParametersAdapter.ParameterAdapterObjectHandler;
@@ -11,6 +12,7 @@ import pl.wppiotrek.wydatki.managers.DownloadDataManager;
 import pl.wppiotrek.wydatki.managers.ParameterManager;
 import pl.wppiotrek.wydatki.support.AndroidGlobals;
 import pl.wppiotrek.wydatki.support.DialogFactory;
+import pl.wppiotrek.wydatki.support.ListSupport;
 import pl.wppiotrek.wydatki.units.DialogType;
 import pl.wppiotrek.wydatki.units.RefreshOptions;
 import pl.wppiotrek.wydatki.units.ResultCodes;
@@ -18,6 +20,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,15 +33,49 @@ import android.widget.ListView;
 public class AttributesActivity extends ProgressActivity implements
 		OnItemClickListener {
 
+	public static final String BUNDLE_ISCHECKABLE = "0";
+	public static final String BUNDLE_SELECT_PARAMETER_FOR_CATEGORY = "1";
+	public static final String BUNDLE_SELECTED_PARAMETERS_FOR_CATEGORY = "2";
+
+	Boolean isChecakble = false;
+	Boolean isSelectedForCategory = false;
 	private ListView list;
 	private ParametersAdapter adapter;
 	private DownloadDataManager ddManager;
+	private String selectedItems = "";
+
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if (isSelectedForCategory) {
+				Intent intent = this.getIntent();
+				this.setResult(RESULT_OK, intent);
+				String items = ListSupport.ArrayListIntegerToString(adapter
+						.getSelectedItems());
+				intent.putExtra(
+						EditCategoryActivity.BUNDLE_SELECTED_PARAMETERS,
+						items.toString());
+			}
+			finish();
+			return true;
+		}
+		return super.onKeyUp(keyCode, event);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_attributes);
 		super.setProgressDialogCancelable(true);
+
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null) {
+			isChecakble = bundle.getBoolean(BUNDLE_ISCHECKABLE);
+			isSelectedForCategory = bundle
+					.getBoolean(BUNDLE_SELECT_PARAMETER_FOR_CATEGORY);
+			selectedItems = bundle
+					.getString(BUNDLE_SELECTED_PARAMETERS_FOR_CATEGORY);
+		}
 
 		linkViews();
 		configureViews();
@@ -68,7 +105,8 @@ public class AttributesActivity extends ProgressActivity implements
 		ArrayList<Parameter> parameters = globals.getParametersList();
 
 		if (parameters != null) {
-			adapter = new ParametersAdapter(this, parameters);
+			adapter = new ParametersAdapter(this, parameters, isChecakble,
+					selectedItems);
 			list.setAdapter(adapter);
 			list.setOnItemClickListener(this);
 		}

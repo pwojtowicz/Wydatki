@@ -3,6 +3,7 @@ package pl.wppiotrek.wydatki.activities.edit;
 import java.util.ArrayList;
 
 import pl.wppiotrek.wydatki.R;
+import pl.wppiotrek.wydatki.activities.AttributesActivity;
 import pl.wppiotrek.wydatki.adapters.CategoryParametersAdapter;
 import pl.wppiotrek.wydatki.adapters.SpinnerAdapter;
 import pl.wppiotrek.wydatki.adapters.SpinnerAdapter.SpinerHelper;
@@ -19,8 +20,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -29,6 +32,9 @@ import android.widget.ToggleButton;
 
 public class EditCategoryActivity extends EditAbstractActivity<Category> {
 
+	public static final String BUNDLE_SELECTED_PARAMETERS = "0";
+
+	static final int PARAMETERS_ACTIVITY_ID = 0;
 	private Spinner spn_parent;
 	private ParameterManager manager;
 	private ListView listView;
@@ -52,12 +58,40 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 
 		etbx_name = (EditText) header.findViewById(R.id.edit_etbx_name);
 		cbx_isActive = (CheckBox) header.findViewById(R.id.edit_cbx_isActive);
+
+		Button btn_addParameters = (Button) header
+				.findViewById(R.id.edit_category_btn_add_parameters);
+		btn_addParameters.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				showParametersActivity();
+			}
+		});
+
 		tbn_isPositive = (ToggleButton) header
 				.findViewById(R.id.edit_category_tbn_ispositive);
 		spn_parent = (Spinner) header
 				.findViewById(R.id.edit_category_spn_parent);
 
 		listView.addHeaderView(header);
+
+	}
+
+	protected void showParametersActivity() {
+		Intent intent = new Intent(this, AttributesActivity.class);
+		Bundle bundle = new Bundle();
+		bundle.putBoolean(AttributesActivity.BUNDLE_ISCHECKABLE, true);
+		bundle.putBoolean(
+				AttributesActivity.BUNDLE_SELECT_PARAMETER_FOR_CATEGORY, true);
+
+		if (currentObject.getAttributes() != null) {
+			bundle.putString(
+					AttributesActivity.BUNDLE_SELECTED_PARAMETERS_FOR_CATEGORY,
+					ListSupport.ArrayToString(currentObject.getAttributes()));
+		}
+
+		intent.putExtras(bundle);
+		startActivityForResult(intent, PARAMETERS_ACTIVITY_ID);
 
 	}
 
@@ -89,7 +123,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 		items.add(new SpinnerObject(0, getText(R.string.no_selected_value)
 				.toString()));
 
-		ArrayList<Category> categories = globals.getCategoryList();
+		ArrayList<Category> categories = globals.getCategoriesList();
 		if (categories != null) {
 			for (Category item : categories) {
 				if (item.isActive() && item.getParentId() > 0)
@@ -115,7 +149,7 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 						View view, int index, long id) {
 					SpinerHelper oh = (SpinerHelper) view.getTag();
 					if (oh.object.getId() >= 0)
-						onCategoryChange(oh.object);
+						onCategoryChange(oh.object.getId());
 
 				}
 
@@ -126,9 +160,10 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 		}
 	}
 
-	protected void onCategoryChange(SpinnerObject object) {
-		currentObject.setParentId(object.getId());
+	protected void onCategoryChange(int objectId) {
+		currentObject.setParentId(objectId);
 		adapter.clear();
+		AndroidGlobals globals = AndroidGlobals.getInstance();
 
 		if (currentObject.getAttributes() != null
 				&& currentObject.getAttributes().length > 0) {
@@ -138,26 +173,26 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 			}
 		}
 
-		if (object.getId() > 0) {
+		if (objectId > 0) {
 			adapter.addParameter("Parametry nadrz«dne");
-			addParameterForCategoryId(object.getId(), AndroidGlobals
-					.getInstance().getCategoryList());
+			addParameterForCategoryId(objectId, globals);
 		}
 		adapter.refresh();
 
 	}
 
 	private void addParameterForCategoryId(int categoryId,
-			ArrayList<Category> cat) {
-		for (Category item : cat) {
-			if (item.getId() == categoryId) {
-				// Dodanie parametr—w kategorii nadrz«dnej jećli istniej�
-				if (item.getParentId() > 0)
-					addParameterForCategoryId(item.getParentId(), cat);
-				for (Parameter parameter : item.getAttributes()) {
-					adapter.addParameter(parameter);
-				}
+			AndroidGlobals globals) {
+		Category item = globals.getCategoryById(categoryId);
+		if (item != null) {
+			// if (item.getId() == categoryId) {
+			// Dodanie parametr—w kategorii nadrz«dnej jećli istniej�
+			if (item.getParentId() > 0)
+				addParameterForCategoryId(item.getParentId(), globals);
+			for (Parameter parameter : item.getAttributes()) {
+				adapter.addParameter(parameter);
 			}
+			// }
 		}
 	}
 
@@ -218,7 +253,8 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 				globals.updateCategoriesList((Category) object);
 				leaveActivity(ResultCodes.RESULT_NEED_UPDATE);
 			} else {
-				globals.getCategoryList().add((Category) object);
+				globals.updateCategoriesList((Category) object);
+				// .getCategoryList().add((Category) object);
 				leaveActivity(ResultCodes.RESULT_NEED_REFRESH);
 			}
 
@@ -266,6 +302,32 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 		else
 			manager.createNewCategory(currentObject);
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == PARAMETERS_ACTIVITY_ID) {
+			if (resultCode == RESULT_OK) {
+				String items = data.getStringExtra(BUNDLE_SELECTED_PARAMETERS);
+				ArrayList<Integer> itemsArr = ListSupport
+						.StringToArrayList(items);
+				currentObject.setAttributes(null);
+
+				int size = itemsArr.size();
+				Parameter[] parameters = new Parameter[size];
+
+				for (int i = 0; i < size; i++) {
+
+					Parameter p = new Parameter();
+					p.setId(itemsArr.get(i));
+					parameters[i] = p;
+
+				}
+				currentObject.setAttributes(parameters);
+				refreshActivity(false);
+			}
+		}
 	}
 
 }

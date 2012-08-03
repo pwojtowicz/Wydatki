@@ -2,7 +2,7 @@
 
     <string name="app_name">Wydatki</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_settings">Ustawienia</string>
     <string name="title_activity_main">Konta</string>
     <string name="title_activity_categories">Kategorie</string>
     <string name="title_activity_transactions">Transakcje</string>
@@ -98,6 +98,7 @@
     <string name="project">Projekt</string>
     <string name="projects">Projekty</string>
     <string name="edit_account_is_in_sum">Czy zliczać do sumy salda?</string>
+    <string name="edit_category_add_parameter">dodaj parametr</string>
     
 
 </resources>

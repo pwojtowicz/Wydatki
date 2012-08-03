@@ -19,7 +19,6 @@ import pl.wppiotrek.wydatki.managers.DownloadDataManager;
 import pl.wppiotrek.wydatki.managers.TransactionManager;
 import pl.wppiotrek.wydatki.support.AndroidGlobals;
 import pl.wppiotrek.wydatki.support.DialogFactory;
-import pl.wppiotrek.wydatki.support.ListSupport;
 import pl.wppiotrek.wydatki.units.DialogType;
 import pl.wppiotrek.wydatki.units.RefreshOptions;
 import pl.wppiotrek.wydatki.units.ResultCodes;
@@ -272,7 +271,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 	private void getCategories() {
 
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		ArrayList<Category> categories = globals.getCategoryList();
+		ArrayList<Category> categories = globals.getCategoriesList();
 		if (categories != null) {
 
 			ArrayList<SpinnerObject> items = new ArrayList<SpinnerObject>();
@@ -367,13 +366,13 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 	protected void onCategoryChange(SpinnerObject object) {
 		if (!isTransfer) {
 			AndroidGlobals globals = AndroidGlobals.getInstance();
-			ArrayList<Category> cat = globals.getCategoryList();
+			// ArrayList<Category> cat = globals.getCategoriesList();
 			ArrayList<InvokeTransactionParameter> parameters = new ArrayList<InvokeTransactionParameter>();
-			if (cat != null) {
+			// if (cat != null) {
 
-				addParameterForCategoryId(object.getId(), cat, parameters);
+			addParameterForCategoryId(object.getId(), parameters);
 
-			}
+			// }
 			if (parameters.size() > 0) {
 				additionParametersTextView.setVisibility(TextView.VISIBLE);
 				hasAdditionalParameters = true;
@@ -381,7 +380,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 				additionParametersTextView.setVisibility(TextView.GONE);
 				hasAdditionalParameters = false;
 			}
-			Category c = ListSupport.getCategoryById(object.getId(), cat);
+			Category c = globals.getCategoryById(object.getId());
 			if (c != null) {
 				isPositive.setChecked(c.isPositive());
 			}
@@ -391,15 +390,14 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 	}
 
 	private void addParameterForCategoryId(int categoryId,
-			ArrayList<Category> cat,
 			ArrayList<InvokeTransactionParameter> parameters) {
 		AndroidGlobals globals = AndroidGlobals.getInstance();
-		for (Category item : cat) {
+		Category item = globals.getCategoryById(categoryId);
+		if (item != null) {
 			if (item.getId() == categoryId) {
 				// Dodanie parametr—w kategorii nadrz«dnej jećli istniej�
 				if (item.getParentId() > 0)
-					addParameterForCategoryId(item.getParentId(), cat,
-							parameters);
+					addParameterForCategoryId(item.getParentId(), parameters);
 				for (Parameter parameter : item.getAttributes()) {
 					parameter = globals.getParameterById(parameter.getId());
 

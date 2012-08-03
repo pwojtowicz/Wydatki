@@ -12,7 +12,6 @@ import pl.wppiotrek.wydatki.interfaces.IOnObjectsReceivedListener;
 import pl.wppiotrek.wydatki.providers.ControlBundle;
 import pl.wppiotrek.wydatki.support.AndroidGlobals;
 import pl.wppiotrek.wydatki.support.ControlView;
-import pl.wppiotrek.wydatki.support.ListSupport;
 import pl.wppiotrek.wydatki.units.UnitConverter;
 import pl.wppiotrek.wydatki.units.ViewState;
 import pl.wppiotrek.wydatki.views.ViewType;
@@ -239,11 +238,12 @@ public class TransactionsAdapter extends BaseAdapter implements
 			ItemsContainer<Transaction> transactions = (ItemsContainer<Transaction>) object;
 			if (transactions.getItems().length > 0) {
 				AndroidGlobals g = AndroidGlobals.getInstance();
-				ArrayList<Category> categories = g.getCategoryList();
+				// ArrayList<Category> categories = g.getCategoryList();
 				for (Transaction item : transactions.getItems()) {
 					if (item.getCategory() != null) {
-						Category cat = ListSupport.getCategoryById(item
-								.getCategory().getId(), categories);
+						Category cat = g.getCategoryById(item.getCategory()
+								.getId()); // ListSupport.getCategoryById(item
+						// .getCategory().getId(), categories);
 						if (cat != null)
 							item.getCategory().setName(cat.getName());
 					}

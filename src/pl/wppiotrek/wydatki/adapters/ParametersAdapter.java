@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.entities.Parameter;
+import pl.wppiotrek.wydatki.support.ListSupport;
 import pl.wppiotrek.wydatki.units.ParameterTypes;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -19,8 +21,16 @@ public class ParametersAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<Parameter> items;
 	private LayoutInflater mInflater;
+	private Boolean isCheckable;
 
-	public ParametersAdapter(Context context, ArrayList<Parameter> items) {
+	private ArrayList<Integer> selectedItemsId = new ArrayList<Integer>();
+
+	public ParametersAdapter(Context context, ArrayList<Parameter> items,
+			Boolean isCheckable, String selectedItems) {
+		if (selectedItems != null)
+			selectedItemsId = ListSupport.StringToArrayList(selectedItems);
+
+		this.isCheckable = isCheckable;
 		this.context = context;
 		this.items = items;
 		mInflater = (LayoutInflater) context
@@ -60,6 +70,35 @@ public class ParametersAdapter extends BaseAdapter {
 
 			oh.cbx_selected = (CheckBox) convertView
 					.findViewById(R.id.row_cbx_selected);
+			oh.cbx_selected.setOnClickListener(new OnClickListener() {
+
+				public void onClick(View view) {
+					int itemId = (Integer) view.getTag();
+					if (((CheckBox) view).isChecked())
+						selectedItemsId.add(itemId);
+					else {
+						boolean tmp = selectedItemsId.remove((Integer) itemId);
+						int p = 0;
+					}
+				}
+			});
+			// oh.cbx_selected
+			// .setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			//
+			// public void onCheckedChanged(CompoundButton cbx,
+			// boolean value) {
+			// int itemId = (Integer) cbx.getTag();
+			// if (value)
+			// selectedItemsId.add(itemId);
+			// else {
+			// boolean tmp = selectedItemsId
+			// .remove((Integer) itemId);
+			// int p = 0;
+			// }
+			//
+			// }
+			// });
+
 			convertView.setTag(oh);
 		}
 
@@ -72,6 +111,17 @@ public class ParametersAdapter extends BaseAdapter {
 			Object o, int index) {
 		Parameter p = (Parameter) o;
 		if (p != null) {
+			if (isCheckable)
+				oh.cbx_selected.setVisibility(CheckBox.VISIBLE);
+			else
+				oh.cbx_selected.setVisibility(CheckBox.GONE);
+			oh.cbx_selected.setTag(p.getId());
+
+			if (selectedItemsId.contains((Integer) p.getId()))
+				oh.cbx_selected.setChecked(true);
+			else
+				oh.cbx_selected.setChecked(false);
+
 			if (p.isActive())
 				oh.lock.setVisibility(ImageView.GONE);
 			else
@@ -85,7 +135,10 @@ public class ParametersAdapter extends BaseAdapter {
 
 			oh.parameter = p;
 		}
+	}
 
+	public ArrayList<Integer> getSelectedItems() {
+		return selectedItemsId;
 	}
 
 	public class ParameterAdapterObjectHandler {

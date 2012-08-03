@@ -17,10 +17,11 @@ public class AndroidGlobals {
 	private String userPassword = "123qwe";
 	private String serverAddress = "";
 
-	private ArrayList<Category> categoryList;
+	// private ArrayList<Category> categoryList;
 
 	private ArrayList<Transaction> transactionList;
 
+	private LinkedHashMap<Integer, Category> categoriesDictionary;
 	private LinkedHashMap<Integer, Account> accountsDictionary;
 	private LinkedHashMap<Integer, Parameter> parametersDictionary;
 	private LinkedHashMap<Integer, Project> projectsDictionary;
@@ -50,17 +51,17 @@ public class AndroidGlobals {
 	private AndroidGlobals() {
 	}
 
-	public void setCategoryList(ArrayList<Category> elements) {
-		categoryList = elements;
-	}
+	// public void setCategoryList(ArrayList<Category> elements) {
+	// categoryList = elements;
+	// }
 
 	public void setTransactionList(ArrayList<Transaction> elements) {
 		transactionList = elements;
 	}
 
-	public ArrayList<Category> getCategoryList() {
-		return categoryList;
-	}
+	// public ArrayList<Category> getCategoryList() {
+	// return categoryList;
+	// }
 
 	public ArrayList<Transaction> getTransactionList() {
 		return transactionList;
@@ -168,15 +169,18 @@ public class AndroidGlobals {
 	}
 
 	public void updateCategoriesList(Category category) {
-		for (Category item : categoryList) {
-			if (item.getId() == category.getId()) {
-				item.setName(category.getName());
-				item.setIsActive(category.isActive());
-				item.setAttributes(category.getAttributes());
-				item.setParentId(category.getParentId());
-				break;
-			}
-		}
+		if (categoriesDictionary.get(category.getId()) != null)
+			categoriesDictionary.remove(category.getId());
+		categoriesDictionary.put(category.getId(), category);
+		// for (Category item : categoryList) {
+		// if (item.getId() == category.getId()) {
+		// item.setName(category.getName());
+		// item.setIsActive(category.isActive());
+		// item.setAttributes(category.getAttributes());
+		// item.setParentId(category.getParentId());
+		// break;
+		// }
+		// }
 	}
 
 	public void updateProjectsList(Project project) {
@@ -200,6 +204,11 @@ public class AndroidGlobals {
 
 	public Account getAccountById(int accountId) {
 		return accountsDictionary.get(accountId);
+
+	}
+
+	public Category getCategoryById(int categoryId) {
+		return categoriesDictionary.get(categoryId);
 
 	}
 
@@ -282,6 +291,11 @@ public class AndroidGlobals {
 		this.accountsDictionary = accountsDictionary;
 	}
 
+	public void setCategoriesDictionary(
+			LinkedHashMap<Integer, Category> categoriesDictionary) {
+		this.categoriesDictionary = categoriesDictionary;
+	}
+
 	public ArrayList<Account> getAccountsList() {
 		if (accountsDictionary == null)
 			return null;
@@ -304,6 +318,18 @@ public class AndroidGlobals {
 
 		}
 		return parameters;
+	}
+
+	public ArrayList<Category> getCategoriesList() {
+		if (categoriesDictionary == null)
+			return null;
+		ArrayList<Category> categories = new ArrayList<Category>();
+		Collection<Category> items = categoriesDictionary.values();
+		for (Category category : items) {
+			categories.add(category);
+
+		}
+		return categories;
 	}
 
 	public ArrayList<Project> getProjectsList() {
@@ -329,6 +355,10 @@ public class AndroidGlobals {
 
 	public LinkedHashMap<Integer, Project> getProjectsDictionary() {
 		return projectsDictionary;
+	}
+
+	public LinkedHashMap<Integer, Category> getCategoriesDictionary() {
+		return categoriesDictionary;
 	}
 
 }

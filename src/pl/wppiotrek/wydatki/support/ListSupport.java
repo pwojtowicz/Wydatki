@@ -4,20 +4,48 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import pl.wppiotrek.wydatki.entities.Account;
-import pl.wppiotrek.wydatki.entities.Category;
+import pl.wppiotrek.wydatki.entities.ModelBase;
 import pl.wppiotrek.wydatki.entities.Parameter;
 import pl.wppiotrek.wydatki.entities.Project;
 
 public class ListSupport {
 
-	public static Account getAccountById(int Id, ArrayList<Account> items) {
-
-		for (Account account : items) {
-			if (account.getId() == Id)
-				return account;
+	public static ArrayList<Integer> StringToArrayList(String items) {
+		ArrayList<Integer> elements = new ArrayList<Integer>();
+		String[] tmp = items.split(";");
+		// if (tmp.length > 0)
+		for (String string : tmp) {
+			if (string.length() > 0)
+				elements.add(Integer.parseInt(string));
 		}
-		return null;
+		return elements;
+	}
 
+	public static String ArrayToString(ModelBase[] items) {
+		StringBuilder sb = new StringBuilder();
+		for (ModelBase item : items) {
+			sb.append(item.getId() + ";");
+		}
+
+		return sb.toString();
+	}
+
+	public static String ArrayListModelBaseToString(ArrayList<ModelBase> items) {
+		StringBuilder sb = new StringBuilder();
+		for (ModelBase item : items) {
+			sb.append(item.getId() + ";");
+		}
+
+		return sb.toString();
+	}
+
+	public static String ArrayListIntegerToString(ArrayList<Integer> items) {
+		StringBuilder sb = new StringBuilder();
+		for (Integer item : items) {
+			sb.append(item.toString() + ";");
+		}
+
+		return sb.toString();
 	}
 
 	public static boolean isAccountNameUsed(String name) {
@@ -29,26 +57,6 @@ public class ListSupport {
 		}
 
 		return false;
-
-	}
-
-	public static Category getCategoryById(int Id, ArrayList<Category> items) {
-		if (items != null)
-			for (Category category : items) {
-				if (category.getId() == Id)
-					return category;
-			}
-		return null;
-
-	}
-
-	public static Parameter getParameterById(int Id, ArrayList<Parameter> items) {
-		if (items != null)
-			for (Parameter parameter : items) {
-				if (parameter.getId() == Id)
-					return parameter;
-			}
-		return null;
 
 	}
 
