@@ -104,9 +104,18 @@ public class AttributesActivity extends ProgressActivity implements
 		AndroidGlobals globals = AndroidGlobals.getInstance();
 		ArrayList<Parameter> parameters = globals.getParametersList();
 
+		ArrayList<Parameter> parametersToShow = new ArrayList<Parameter>();
+		if (isSelectedForCategory) {
+			for (Parameter parameter : parameters) {
+				if (parameter.isActive())
+					parametersToShow.add(parameter);
+			}
+		} else
+			parametersToShow = parameters;
+
 		if (parameters != null) {
-			adapter = new ParametersAdapter(this, parameters, isChecakble,
-					selectedItems);
+			adapter = new ParametersAdapter(this, parametersToShow,
+					isChecakble, selectedItems);
 			list.setAdapter(adapter);
 			list.setOnItemClickListener(this);
 		}
