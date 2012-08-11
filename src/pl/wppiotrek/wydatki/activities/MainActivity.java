@@ -7,6 +7,7 @@ import pl.wppiotrek.wydatki.activities.edit.EditAccountActivity;
 import pl.wppiotrek.wydatki.adapters.AccountsAdapter;
 import pl.wppiotrek.wydatki.adapters.AccountsAdapter.AccountsAdapterObjectHandler;
 import pl.wppiotrek.wydatki.entities.Account;
+import pl.wppiotrek.wydatki.entities.StartContainer;
 import pl.wppiotrek.wydatki.managers.AccountManager;
 import pl.wppiotrek.wydatki.managers.DataBaseManager;
 import pl.wppiotrek.wydatki.managers.DownloadDataManager;
@@ -127,6 +128,8 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 			refreshList();
 		} else if (object instanceof Account[]) {
 			refreshList();
+		} else if (object instanceof StartContainer[]) {
+			refreshList();
 		}
 	}
 
@@ -178,8 +181,7 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 		} else {
 
 			if (isForceRefresh)
-				ddManager.refresh(isForceRefresh,
-						RefreshOptions.refreshAccounts);
+				ddManager.refresh(isForceRefresh, RefreshOptions.refreshAll);
 			else {
 				refreshList();
 			}

@@ -6,6 +6,7 @@ import pl.wppiotrek.wydatki.entities.Account;
 import pl.wppiotrek.wydatki.entities.Category;
 import pl.wppiotrek.wydatki.entities.Parameter;
 import pl.wppiotrek.wydatki.entities.Project;
+import pl.wppiotrek.wydatki.entities.StartContainer;
 import pl.wppiotrek.wydatki.interfaces.IOnObjectsReceivedListener;
 import pl.wppiotrek.wydatki.support.AndroidGlobals;
 import pl.wppiotrek.wydatki.support.DialogFactory;
@@ -23,6 +24,7 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 	boolean accountsIsDownloaded = false;
 	boolean parametersIsDownloaded = false;
 	boolean projectsIsDownloaded = false;
+	boolean startIsDownloaded = false;
 
 	private AccountManager accountManager;
 	private CategoriesManager categoryManager;
@@ -93,6 +95,9 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 	}
 
 	private void reloadData() {
+		if (!startIsDownloaded)
+			getStartsInfo(globals);
+
 		if (!accountsIsDownloaded)
 			getAccounts(globals);
 		if (accountsIsDownloaded && !parametersIsDownloaded)
@@ -104,6 +109,13 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 		if (accountsIsDownloaded && categoriesIsDownloaded
 				&& parametersIsDownloaded && !projectsIsDownloaded)
 			getProjects(globals);
+	}
+
+	private void getStartsInfo(AndroidGlobals globals2) {
+		StartManager startManager = new StartManager(this);
+		startManager.setOnObjectsReceivedListener(listener);
+		startManager.getAll();
+
 	}
 
 	private void getProjects(AndroidGlobals globals) {
@@ -155,62 +167,78 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 	}
 
 	public void onObjectsReceived(Object object, Object object2) {
-		if (object instanceof Account[]) {
-			System.out.println("DownloadDataManager:onObjectsReceived Account");
-			accountsIsDownloaded = true;
-			LinkedHashMap<Integer, Account> elements = new LinkedHashMap<Integer, Account>();
-			Account[] items = (Account[]) object;
-			for (Account item : items) {
-				elements.put(item.getId(), item);
+		if (object instanceof StartContainer[]) {
+			StartContainer startContainer = ((StartContainer[]) object)[0];
+
+			if (startContainer != null) {
+				setAccounts(startContainer.getAccounts());
+				setCategories(startContainer.getCategories());
+				setParameters(startContainer.getParameters());
+				setProjects(startContainer.getProjects());
 			}
-			globals.setAccountsDictionary(elements);
+			startIsDownloaded = true;
+		}
+		if (object instanceof Account[]) {
+			setAccounts(object);
 		}
 		if (object instanceof Category[]) {
-			System.out
-					.println("DownloadDataManager:onObjectsReceived Category");
-			categoriesIsDownloaded = true;
-
-			LinkedHashMap<Integer, Category> elements = new LinkedHashMap<Integer, Category>();
-			Category[] items = (Category[]) object;
-			for (Category item : items) {
-				elements.put(item.getId(), item);
-			}
-
-			globals.setCategoriesDictionary(elements);
-
-			// ArrayList<Category> elements = new ArrayList<Category>();
-			// Category[] items = (Category[]) object;
-			//
-			// for (Category item : items) {
-			// item.setDescription();
-			// elements.add(item);
-			// }
-			// globals.setCategoryList(elements);
+			setCategories(object);
 		}
 		if (object instanceof Parameter[]) {
-			System.out
-					.println("DownloadDataManager:onObjectsReceived Parameter");
-			parametersIsDownloaded = true;
-			LinkedHashMap<Integer, Parameter> elements = new LinkedHashMap<Integer, Parameter>();
-			Parameter[] items = (Parameter[]) object;
-			for (Parameter item : items) {
-				elements.put(item.getId(), item);
-			}
-
-			globals.setParametersDictionary(elements);
+			setParameters(object);
 		}
 		if (object instanceof Project[]) {
-			System.out.println("DownloadDataManager:onObjectsReceived Project");
-			projectsIsDownloaded = true;
-			LinkedHashMap<Integer, Project> elements = new LinkedHashMap<Integer, Project>();
-			Project[] items = (Project[]) object;
-			for (Project item : items) {
-				elements.put(item.getId(), item);
-			}
-			globals.setProjectsDictionary(elements);
+			setProjects(object);
 		}
 		reloadData();
 
+	}
+
+	private void setProjects(Object object) {
+		System.out.println("DownloadDataManager:onObjectsReceived Project");
+		projectsIsDownloaded = true;
+		LinkedHashMap<Integer, Project> elements = new LinkedHashMap<Integer, Project>();
+		Project[] items = (Project[]) object;
+		for (Project item : items) {
+			elements.put(item.getId(), item);
+		}
+		globals.setProjectsDictionary(elements);
+	}
+
+	private void setParameters(Object object) {
+		System.out.println("DownloadDataManager:onObjectsReceived Parameter");
+		parametersIsDownloaded = true;
+		LinkedHashMap<Integer, Parameter> elements = new LinkedHashMap<Integer, Parameter>();
+		Parameter[] items = (Parameter[]) object;
+		for (Parameter item : items) {
+			elements.put(item.getId(), item);
+		}
+
+		globals.setParametersDictionary(elements);
+	}
+
+	private void setCategories(Object object) {
+		System.out.println("DownloadDataManager:onObjectsReceived Category");
+		categoriesIsDownloaded = true;
+
+		LinkedHashMap<Integer, Category> elements = new LinkedHashMap<Integer, Category>();
+		Category[] items = (Category[]) object;
+		for (Category item : items) {
+			elements.put(item.getId(), item);
+		}
+
+		globals.setCategoriesDictionary(elements);
+	}
+
+	private void setAccounts(Object object) {
+		System.out.println("DownloadDataManager:onObjectsReceived Account");
+		accountsIsDownloaded = true;
+		LinkedHashMap<Integer, Account> elements = new LinkedHashMap<Integer, Account>();
+		Account[] items = (Account[]) object;
+		for (Account item : items) {
+			elements.put(item.getId(), item);
+		}
+		globals.setAccountsDictionary(elements);
 	}
 
 	public void onObjectsProgressUpdate(int progress) {
@@ -222,19 +250,23 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 		accountsIsDownloaded = true;
 		parametersIsDownloaded = true;
 		projectsIsDownloaded = true;
+		startIsDownloaded = true;
 
-		int i = 8;
-		while (i > 0) {
+		if (refreshOpctions == (RefreshOptions.refreshAll)) {
+			startIsDownloaded = false;
+		} else {
+			int i = 8;
+			while (i > 0) {
 
-			if (refreshOpctions / i == 1
-					|| (refreshOpctions >= i && refreshOpctions % i > 0)) {
-				setRefreshOptions(isForceRefresh, i);
-				refreshOpctions -= i;
+				if (refreshOpctions / i == 1
+						|| (refreshOpctions >= i && refreshOpctions % i > 0)) {
+					setRefreshOptions(isForceRefresh, i);
+					refreshOpctions -= i;
+				}
+
+				i = i / 2;
 			}
-
-			i = i / 2;
 		}
-
 		reloadData();
 
 	}
