@@ -234,10 +234,15 @@ public class DownloadDataManager implements IOnObjectsReceivedListener {
 		System.out.println("DownloadDataManager:onObjectsReceived Account");
 		accountsIsDownloaded = true;
 		LinkedHashMap<Integer, Account> elements = new LinkedHashMap<Integer, Account>();
+		LinkedHashMap<Integer, Account> elementsLock = new LinkedHashMap<Integer, Account>();
 		Account[] items = (Account[]) object;
 		for (Account item : items) {
-			elements.put(item.getId(), item);
+			if (item.isActive())
+				elements.put(item.getId(), item);
+			else
+				elementsLock.put(item.getId(), item);
 		}
+		elements.putAll(elementsLock);
 		globals.setAccountsDictionary(elements);
 	}
 

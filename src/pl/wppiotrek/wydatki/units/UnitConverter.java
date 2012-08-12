@@ -38,4 +38,9 @@ public class UnitConverter {
 		return df.format(date);
 	}
 
+	public static String convertDateTimeToString(Date date) {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MMM-dd HH:mm");
+		return df.format(date);
+	}
+
 }

@@ -1,9 +1,15 @@
 package pl.wppiotrek.wydatki.entities;
 
+import java.util.Date;
+
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
+
+import pl.wppiotrek.wydatki.support.JSONDateDeserializer;
+import pl.wppiotrek.wydatki.support.JSONDateSerializer;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonSerialize(include = Inclusion.NON_NULL)
@@ -23,6 +29,10 @@ public class Account extends ModelBase {
 		this.setBalance(balance);
 		this.setIsActive(isActive);
 	}
+
+	@JsonDeserialize(using = JSONDateDeserializer.class)
+	@JsonProperty("LastActionDate")
+	private Date lastActionDate;
 
 	@JsonProperty("Name")
 	private String name;
@@ -102,6 +112,15 @@ public class Account extends ModelBase {
 
 	public void setImageIndex(Byte imageIndex) {
 		this.imageIndex = imageIndex;
+	}
+
+	@JsonSerialize(using = JSONDateSerializer.class)
+	public Date getLastActionDate() {
+		return lastActionDate;
+	}
+
+	public void setLastActionDate(Date lastActionDate) {
+		this.lastActionDate = lastActionDate;
 	}
 
 	// /**

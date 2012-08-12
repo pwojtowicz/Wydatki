@@ -50,6 +50,8 @@ public class AccountsAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.row_account_layout, null);
 			oh.name = (TextView) convertView
 					.findViewById(R.id.row_account_name);
+			oh.lasAction = (TextView) convertView
+					.findViewById(R.id.row_account_last_action_date);
 			oh.balance = (TextView) convertView
 					.findViewById(R.id.row_account_balance);
 			oh.image = (ImageView) convertView
@@ -75,6 +77,9 @@ public class AccountsAdapter extends BaseAdapter {
 
 			oh.name.setText(a.getName());
 
+			oh.lasAction.setText(UnitConverter.convertDateTimeToString(a
+					.getLastActionDate()));
+
 			oh.balance.setText(UnitConverter.doubleToCurrency(a.getBalance()));
 
 			if (a.getBalance() < 0)
@@ -95,6 +100,7 @@ public class AccountsAdapter extends BaseAdapter {
 		public Account account;
 		public TextView balance;
 		public TextView name;
+		public TextView lasAction;
 
 		public ImageView image;
 		public ImageView lock;
