@@ -21,7 +21,7 @@ public class UnitConverter {
 		fmt.setGroupingUsed(true);
 		fmt.setDecimalFormatSymbols(fmts);
 
-		return fmt.format(value) + " z³";
+		return fmt.format(value) + " z¸";
 	}
 
 	public static String dateTimeString(Date date) {

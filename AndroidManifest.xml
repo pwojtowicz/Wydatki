@@ -63,6 +63,10 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_parameters" />
         <activity
+            android:name=".activities.RecurActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_parameters" />        
+        <activity
             android:name=".activities.edit.EditParameterActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_parameters" />

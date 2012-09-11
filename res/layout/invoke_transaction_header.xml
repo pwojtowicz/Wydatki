@@ -15,6 +15,7 @@
         android:text="@string/standart_parameters"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+
     <LinearLayout
         android:id="@+id/invoke_transaction_header_ll_date"
         android:layout_width="match_parent"

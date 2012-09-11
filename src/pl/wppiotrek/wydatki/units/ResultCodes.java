@@ -11,4 +11,6 @@ public class ResultCodes {
 	public static final int START_ACTIVITY_EDIT_PARAMETER = 402;
 	public static final int START_ACTIVITY_EDIT_ACOOUNT = 403;
 	public static final int START_ACTIVITY_INVOKE_TRANSACTION = 404;
+
+	public static final int START_ACTIVITY_BUDGET_RECURS = 405;
 }

@@ -16,7 +16,7 @@
             style="@style/Style_TextWithShadow"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="0.33"
             android:background="@color/btn_blue"
             android:text="Nowa transakcja" />
 
@@ -25,9 +25,19 @@
             style="@style/Style_TextWithShadow"
             android:layout_width="0dip"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
+            android:layout_weight="0.33"
             android:background="@color/btn_blue"
             android:text="Nowy przelew" />
+
+        <Button
+            android:id="@+id/account_btn_budget"
+            style="@style/Style_TextWithShadow"
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="0.33"
+            android:background="@color/btn_blue"
+            android:text="Budżety" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -36,6 +46,7 @@
         android:background="@drawable/app_background_dark"
         android:orientation="vertical"
         android:visibility="gone" >
+
     </LinearLayout>
 
     <ListView

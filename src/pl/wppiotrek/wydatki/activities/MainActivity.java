@@ -86,6 +86,10 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 		Button btn_newTransaction = (Button) findViewById(R.id.account_btn_new_transaction);
 		btn_newTransaction.setTag("transaction");
 		btn_newTransaction.setOnClickListener(this);
+
+		Button btn_Budget = (Button) findViewById(R.id.account_btn_budget);
+		btn_Budget.setTag("budget");
+		btn_Budget.setOnClickListener(this);
 	}
 
 	public void onClick(View view) {
@@ -101,6 +105,9 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 			extras.putBoolean("isTransaction", true);
 			intent = new Intent(this, InvokeTransactionActivity.class);
 			intent.putExtras(extras);
+		}
+		if (tag.equals("budget")) {
+			intent = new Intent(this, RecurActivity.class);
 		}
 
 		if (intent != null)
