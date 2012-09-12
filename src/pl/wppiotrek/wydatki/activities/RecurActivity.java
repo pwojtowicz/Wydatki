@@ -1,6 +1,7 @@
 package pl.wppiotrek.wydatki.activities;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.adapters.RecurAdapter;
@@ -44,16 +45,22 @@ public class RecurActivity extends ProgressActivity implements
 		ArrayList<Recur> recurs = new ArrayList<Recur>();
 		Recur r1 = new Recur();
 		r1.setBudgetName("Jedzenie - tydzieÄ 1");
+		r1.setDateFrom(new Date());
+		r1.setDateTo(new Date());
 		r1.setAmount(75.0);
 		r1.setSpend(90.0);
 
 		Recur r2 = new Recur();
 		r2.setBudgetName("Jedzenie - tydzieÄ 2");
+		r2.setDateFrom(new Date());
+		r2.setDateTo(new Date());
 		r2.setAmount(75.0);
 		r2.setSpend(0.0);
 
 		Recur r3 = new Recur();
 		r3.setBudgetName("Jedzenie praca - miesiˆc");
+		r3.setDateFrom(new Date());
+		r3.setDateTo(new Date());
 		r3.setAmount(100.0);
 		r3.setSpend(10.0);
 

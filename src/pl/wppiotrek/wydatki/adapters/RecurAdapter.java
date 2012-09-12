@@ -52,8 +52,7 @@ public class RecurAdapter extends BaseAdapter {
 					.findViewById(R.id.row_recur_budget_name);
 			oh.amount = (TextView) convertView
 					.findViewById(R.id.row_recur_budget_amount);
-			oh.spend = (TextView) convertView
-					.findViewById(R.id.row_recur_budget_spend);
+			oh.date = (TextView) convertView.findViewById(R.id.row_recur_date);
 			oh.left = (TextView) convertView
 					.findViewById(R.id.row_recur_budget_left);
 			oh.progress = (ProgressBar) convertView
@@ -75,15 +74,24 @@ public class RecurAdapter extends BaseAdapter {
 
 			oh.amount.setText(UnitConverter.doubleToCurrency(r.getAmount()));
 
-			oh.spend.setText(UnitConverter.doubleToCurrency(r.getSpend()));
+			oh.date.setText(UnitConverter.convertDateToString(r.getDateFrom())
+					+ " - " + UnitConverter.convertDateToString(r.getDateTo()));
 
 			r.setLeft(r.getAmount() - r.getSpend());
 
 			oh.left.setText(UnitConverter.doubleToCurrency(r.getLeft()));
 
+			if (r.getLeft() < 0)
+				oh.left.setTextColor(context.getResources().getColor(
+						R.color.darkRed));
+			else
+				oh.left.setTextColor(context.getResources().getColor(
+						R.color.darkGreen));
+
 			int x = (int) (r.getSpend() * 100 / r.getAmount());
-			if (x > 100)
-				x = 100;
+			x = 100 - x;
+			if (x < 0)
+				x = 0;
 
 			oh.progress.setProgress(x);
 
@@ -96,7 +104,7 @@ public class RecurAdapter extends BaseAdapter {
 		public Recur recur;
 		public TextView amount;
 		public TextView name;
-		public TextView spend;
+		public TextView date;
 		public TextView left;
 
 		public ProgressBar progress;

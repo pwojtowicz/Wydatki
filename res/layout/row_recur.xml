@@ -3,7 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp" >
+    android:paddingBottom="4dp" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/background_orange" >
+
+        <TextView
+            android:id="@+id/row_recur_id"
+            style="@style/Style_TextWithShadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:text="#1"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/row_recur_date"
+            style="@style/Style_TextWithShadow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:text="Small Text"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,18 +42,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:paddingRight="5dp"
             android:text="Kwota budżetu"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/row_recur_budget_name"
             style="@style/Style_TextWithShadow"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="10dp"
             android:layout_toLeftOf="@+id/row_recur_budget_amount"
+            android:paddingLeft="5dp"
             android:text="Nazwa budżetu"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -44,31 +70,15 @@
             android:layout_alignParentTop="true" >
 
             <TextView
-                android:id="@+id/row_recur_budget_spend"
-                style="@style/Style_TextWithShadow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Wydane zł"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/darkRed" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:text="|"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-            <TextView
                 android:id="@+id/row_recur_budget_left"
                 style="@style/Style_TextWithShadow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingRight="5dp"
                 android:text="Pozostało zł"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="@color/darkGreen" />
+
         </LinearLayout>
 
         <TextView
@@ -77,8 +87,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/linearLayout1"
+            android:paddingLeft="5dp"
             android:text="Kategorie"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </RelativeLayout>
 
     <ProgressBar
@@ -86,6 +98,8 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:progressDrawable="@drawable/budget_progress_bar" />
 
 </LinearLayout>
