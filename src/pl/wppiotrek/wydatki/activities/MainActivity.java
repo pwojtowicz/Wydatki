@@ -107,7 +107,7 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 			intent.putExtras(extras);
 		}
 		if (tag.equals("budget")) {
-			intent = new Intent(this, RecurActivity.class);
+			intent = new Intent(this, ShopingListActivity.class);
 		}
 
 		if (intent != null)

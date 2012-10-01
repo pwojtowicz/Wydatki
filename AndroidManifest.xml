@@ -75,6 +75,10 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_parameters" />
         <activity
+            android:name=".activities.ShopingListActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_parameters" />
+        <activity
             android:name=".activities.edit.EditCategoryActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_parameters" />
