@@ -2,11 +2,13 @@ package pl.wppiotrek.wydatki.entities;
 
 import java.util.Date;
 
-public class ShopItem {
+import pl.wppiotrek.wydatki.units.Units;
+
+public class ShopItem extends ModelBase {
 	private Date addDate;
 	private String name;
 	private Double value;
-	private String unit;
+	private int unit;
 	private boolean isVisibleForAll;
 	private int userId;
 
@@ -60,11 +62,15 @@ public class ShopItem {
 		this.value = value;
 	}
 
-	public String getUnit() {
+	public int getUnit() {
 		return unit;
 	}
 
-	public void setUnit(String unit) {
+	public String getUnitName() {
+		return Units.getParameterName(unit);
+	}
+
+	public void setUnit(int unit) {
 		this.unit = unit;
 	}
 }

@@ -251,4 +251,10 @@ public class AttributesActivity extends ProgressActivity implements
 		if (dialog != null)
 			dialog.show();
 	}
+
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
 }

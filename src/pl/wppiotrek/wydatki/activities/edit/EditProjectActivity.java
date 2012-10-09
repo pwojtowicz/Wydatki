@@ -106,4 +106,10 @@ public class EditProjectActivity extends EditAbstractActivity<Project> {
 
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

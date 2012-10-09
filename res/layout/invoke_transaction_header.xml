@@ -202,12 +202,33 @@
             android:layout_height="wrap_content"
             android:text="@string/note"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <EditText
-            android:id="@+id/invoke_transaction_header_etbx_note"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10" />
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/invoke_transaction_header_etbx_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:ems="10" >
+
+                <requestFocus />
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/speakButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/btn_blue"
+                android:onClick="speakButtonClicked"
+                android:src="@android:drawable/ic_btn_speak_now" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView

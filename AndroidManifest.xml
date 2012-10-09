@@ -53,6 +53,10 @@
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_parameters" />
         <activity
+            android:name=".activities.edit.EditShopItemActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/title_activity_parameters" />
+        <activity
             android:name=".activities.edit.EditProjectActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_parameters" />

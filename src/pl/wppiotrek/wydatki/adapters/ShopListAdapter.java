@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class ShopListAdapter extends BaseAdapter {
@@ -55,6 +56,9 @@ public class ShopListAdapter extends BaseAdapter {
 			oh.unit = (TextView) convertView
 					.findViewById(R.id.row_shopitem_unit);
 
+			oh.isComplet = (CheckBox) convertView
+					.findViewById(R.id.row_shopitem_iscomplet);
+
 			convertView.setTag(oh);
 		}
 
@@ -70,15 +74,17 @@ public class ShopListAdapter extends BaseAdapter {
 			oh.name.setText(si.getName());
 
 			if (si.isComplet()) {
-				oh.unit.setVisibility(TextView.GONE);
-				oh.value.setVisibility(TextView.GONE);
+				// oh.unit.setVisibility(TextView.GONE);
+				// oh.value.setVisibility(TextView.GONE);
 			} else {
-				oh.unit.setVisibility(TextView.VISIBLE);
-				oh.value.setVisibility(TextView.VISIBLE);
-				oh.unit.setText(si.getUnit());
+				// oh.unit.setVisibility(TextView.VISIBLE);
+				// oh.value.setVisibility(TextView.VISIBLE);
 
-				oh.value.setText(String.valueOf(si.getValue()));
 			}
+			oh.unit.setText(si.getUnitName());
+			oh.value.setText(String.valueOf(si.getValue()));
+
+			oh.isComplet.setChecked(si.isComplet());
 
 			oh.shopItem = si;
 		}
@@ -91,6 +97,7 @@ public class ShopListAdapter extends BaseAdapter {
 		public TextView value;
 		public TextView unit;
 		public TextView addDate;
+		public CheckBox isComplet;
 
 	}
 

@@ -13,4 +13,6 @@ public class ResultCodes {
 	public static final int START_ACTIVITY_INVOKE_TRANSACTION = 404;
 
 	public static final int START_ACTIVITY_BUDGET_RECURS = 405;
+	public static final int START_ACTIVITY_EDIT_SHOPITEM = 406;
+	public static final int START_ACTIVITY_VOICE = 407;
 }

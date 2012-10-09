@@ -212,6 +212,7 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == CalculatorInput_REQUESTCODE) {
 			if (resultCode == RESULT_OK) {
 				String val = data.getStringExtra(CalculatorInput.EXTRA_AMOUNT);
@@ -617,4 +618,13 @@ public class InvokeTransactionActivity extends ProgressActivity implements
 			btn_time.setText(UnitConverter.convertTimeToString(cal.getTime()));
 		}
 	};
+
+	@Override
+	public void onRecognitionRequest(String value) {
+		note.setText(value);
+	}
+
+	public void speakButtonClicked(View v) {
+		super.startVoiceRecognitionActivity();
+	}
 }

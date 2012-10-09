@@ -1,5 +1,7 @@
 package pl.wppiotrek.wydatki.activities;
 
+import java.util.ArrayList;
+
 import pl.wppiotrek.wydatki.R;
 import pl.wppiotrek.wydatki.errors.CommunicationException;
 import pl.wppiotrek.wydatki.errors.ExceptionErrorCodes;
@@ -10,8 +12,10 @@ import pl.wppiotrek.wydatki.units.ResultCodes;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.speech.RecognizerIntent;
 import android.view.MenuItem;
 
 public abstract class ProgressActivity extends Activity implements
@@ -154,4 +158,29 @@ public abstract class ProgressActivity extends Activity implements
 			vibrator.vibrate(20);
 		}
 	}
+
+	public void startVoiceRecognitionActivity() {
+		Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+		intent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+				"Voice recognition Demo...");
+		startActivityForResult(intent, ResultCodes.START_ACTIVITY_VOICE);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == ResultCodes.START_ACTIVITY_VOICE
+				&& resultCode == RESULT_OK) {
+
+			ArrayList<String> matches = data
+					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+			onRecognitionRequest(matches.get(0));
+
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	public abstract void onRecognitionRequest(String value);
 }

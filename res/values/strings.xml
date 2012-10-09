@@ -99,6 +99,10 @@
     <string name="projects">Projekty</string>
     <string name="edit_account_is_in_sum">Czy zliczać do sumy salda?</string>
     <string name="edit_category_add_parameter">dodaj parametr</string>
+    <string name="edit_shopitem_name">Nazwa</string>
+    <string name="edit_shopitem_isComplet">Czy zrealizowane?</string>
+    <string name="edit_shopitem_unit">Jednostka</string>
+    <string name="edit_shopitem_value">Liczba</string>
     
 
 </resources>

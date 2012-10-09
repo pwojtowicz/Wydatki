@@ -133,4 +133,10 @@ public class EditAccountActivity extends EditAbstractActivity<Account> {
 			manager.createNewAccount(currentObject);
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

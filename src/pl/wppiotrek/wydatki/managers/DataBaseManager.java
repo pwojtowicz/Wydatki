@@ -1,9 +1,11 @@
 package pl.wppiotrek.wydatki.managers;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
 import pl.wppiotrek.wydatki.entities.CacheInfo;
+import pl.wppiotrek.wydatki.entities.ShopItem;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,17 +17,22 @@ import android.util.Log;
 public class DataBaseManager {
 
 	private static final String DATABASE_NAME = "wydatki.db";
-	private static final int DATABASE_VERSION = 8;
+	private static final int DATABASE_VERSION = 9;
 
 	private static final String CACHE_TABLE_NAME = "Cache";
+	private static final String SHOP_TABLE_NAME = "ShopItem";
 
 	private static final String INSERT_TO_CACHE = "INSERT INTO "
 			+ CACHE_TABLE_NAME
 			+ "(userLogin, uri, postTAG, eTAG, response, timestamp)  Values(?,?,?,?,?,?)";
 
+	private static final String INSERT_TO_SHOP = "INSERT INTO "
+			+ SHOP_TABLE_NAME + "(name, addDate,unit,userId )  Values(?,?,?,?)";
+
 	private static final String UPDATE_TO_CACHE = "UPDATE " + CACHE_TABLE_NAME
 			+ "SET postTAG=?, eTAG=?, response=?, timestamp=? "
 			+ "WHERE userLogin=? AND uri=?";
+
 	private int openConnections;
 	private OpenHelper openHelper;
 	private SQLiteDatabase db;
@@ -41,7 +48,7 @@ public class DataBaseManager {
 	}
 
 	/**
-	 * Sprawdzenie czy po∏àcznie do bazy danych jest otwarte jesli nie, to
+	 * Sprawdzenie czy po¬∏ÔøΩcznie do bazy danych jest otwarte jesli nie, to
 	 * otwierane jest nowe
 	 **/
 	private void checkIsOpen() {
@@ -53,8 +60,8 @@ public class DataBaseManager {
 	}
 
 	/**
-	 * JeÊli liczba po∏àczeƒ do bazy danych ==1 po∏àczenie jest zamykanie w
-	 * pozosta∏ych przypadkach zmiejszana jest iloÊç aktywnych po∏àczeƒ do bazy
+	 * Jeƒáli liczba po¬∏ÔøΩcze√Ñ do bazy danych ==1 po¬∏ÔøΩczenie jest zamykanie w
+	 * pozosta¬∏ych przypadkach zmiejszana jest iloƒá≈§ aktywnych po¬∏ÔøΩcze√Ñ do bazy
 	 **/
 	private void close() {
 		if (openConnections == 1) {
@@ -76,6 +83,19 @@ public class DataBaseManager {
 		System.out.println("CACHE: Removed " + String.valueOf(result)
 				+ " cache rows");
 		close();
+	}
+
+	public long insertShopitem(ShopItem item) {
+		checkIsOpen();
+		SQLiteStatement insertStmt = this.db.compileStatement(INSERT_TO_SHOP);
+		insertStmt.bindString(1, item.getName());
+		insertStmt.bindLong(2, item.getAddDate().getTime());
+		insertStmt.bindLong(3, item.getUnit());
+		insertStmt.bindLong(4, item.getUserId());
+
+		long result = insertStmt.executeInsert();
+		close();
+		return result;
 	}
 
 	public long insertCache(CacheInfo cache) {
@@ -113,7 +133,7 @@ public class DataBaseManager {
 		CacheInfo ci = null;
 		try {
 			Cursor cursor = this.db
-					.query(CACHE_TABLE_NAME,
+					.query(SHOP_TABLE_NAME,
 							new String[] { "userLogin, uri, postTAG, eTAG, response, timestamp" },
 							"userLogin=? AND uri=?", new String[] { userLogin,
 									uri }, null, null, null);
@@ -144,6 +164,37 @@ public class DataBaseManager {
 
 	}
 
+	public ArrayList<ShopItem> getAllShopItems() {
+		checkIsOpen();
+		ArrayList<ShopItem> items = new ArrayList<ShopItem>();
+		try {
+			Cursor cursor = this.db.query(SHOP_TABLE_NAME,
+					new String[] { "id,name, addDate,unit,userId" }, null,
+					null, null, null, null);
+			if (cursor.moveToFirst()) {
+				do {
+					ShopItem item = new ShopItem();
+					item.setId((int) cursor.getLong(0));
+					item.setName(cursor.getString(1));
+					item.setAddDate(new Date(cursor.getLong(2)));
+					item.setUnit((int) cursor.getLong(3));
+					item.setUserId((int) cursor.getLong(4));
+
+					items.add(item);
+
+				} while (cursor.moveToNext());
+			}
+			if (cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+			close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return items;
+
+	}
+
 	public void insertCahceInfo(CacheInfo cache) {
 		insertCache(cache);
 	}
@@ -169,6 +220,11 @@ public class DataBaseManager {
 			db.execSQL("CREATE TABLE "
 					+ CACHE_TABLE_NAME
 					+ " (cacheId INTEGER PRIMARY KEY , userLogin VARCHAR, uri VARCHAR, postTAG VARCHAR, eTAG VARCHAR, response VARCHAR, timestamp DATETIME)");
+
+			db.execSQL("CREATE TABLE "
+					+ SHOP_TABLE_NAME
+					+ " (id INTEGER PRIMARY KEY , name VARCHAR, addDate DATETIME,unit INTEGER,userId INTEGER)");
+
 		}
 
 		@Override
@@ -177,6 +233,7 @@ public class DataBaseManager {
 					"Upgrading database, this will drop tables and recreate.");
 
 			db.execSQL("DROP TABLE IF EXISTS " + CACHE_TABLE_NAME);
+			db.execSQL("DROP TABLE IF EXISTS " + SHOP_TABLE_NAME);
 
 			onCreate(db);
 		}

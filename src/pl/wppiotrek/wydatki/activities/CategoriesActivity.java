@@ -211,4 +211,10 @@ public class CategoriesActivity extends ProgressActivity implements
 		manager.editCategory(category);
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

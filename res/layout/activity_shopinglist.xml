@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.ShopingListActivity" >
+
+    <Button
+        android:id="@+id/btn_add_new"
+        style="@style/Style_TextWithShadow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/btn_blue"
+        android:text="@string/add_new" />
 
     <ListView
         android:id="@+id/shopinglist_listview"

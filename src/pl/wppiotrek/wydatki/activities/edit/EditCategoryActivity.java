@@ -330,4 +330,10 @@ public class EditCategoryActivity extends EditAbstractActivity<Category> {
 		}
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

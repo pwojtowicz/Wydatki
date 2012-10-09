@@ -242,4 +242,10 @@ public class EditParameterActivity extends EditAbstractActivity<Parameter> {
 
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

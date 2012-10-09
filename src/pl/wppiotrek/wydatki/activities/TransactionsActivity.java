@@ -245,4 +245,10 @@ public class TransactionsActivity extends ProgressActivity implements
 			startActivity(intent);
 		}
 	}
+
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
 }

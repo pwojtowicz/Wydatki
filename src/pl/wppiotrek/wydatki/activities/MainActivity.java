@@ -311,4 +311,10 @@ public class MainActivity extends ProgressActivity implements OnClickListener,
 
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

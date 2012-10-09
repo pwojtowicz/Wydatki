@@ -217,4 +217,10 @@ public class ProjectsActivity extends ProgressActivity implements
 		}
 	}
 
+	@Override
+	public void onRecognitionRequest(String value) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
